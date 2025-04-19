@@ -11,7 +11,7 @@ from telegram.ext import (
 )
 
 from config import API_KEY
-from data_handler import save_entry
+from data_handler import save_entry, read_entries # 💡 добавили read_entries
 from utils import get_main_menu  # Импортируем get_main_menu
 
 # Команда /start
@@ -45,10 +45,14 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     else:
         # Обрабатываем другие нажатия кнопок
         context.user_data["section"] = query.data
-        await query.edit_message_text(f"Ты выбрал раздел: {query.data}. Напиши, что хочешь туда записать.")
+         # 💡 Читаем записи из файла
+        entries = read_entries(query.data)  # 👈 добавлено
+        message = f"Ты выбрал раздел: {query.data}.\n\nВот что у тебя есть:\n{entries}\n\nНапиши, что хочешь туда записать."
+        await query.edit_message_text(message)  # 👈 обновлено сообщение с показом записей
 
 # Обработка текстовых сообщений
 async def text_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
+
     """
     Функция для обработки текстовых сообщений от пользователя.
     Сохраняет сообщение в выбранный раздел.
