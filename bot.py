@@ -42,13 +42,21 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
         # Когда нажимается кнопка Start, показываем основное меню
         keyboard = get_main_menu()  # Получаем основное меню
         await query.edit_message_text("Выберите раздел:", reply_markup=keyboard)
+    elif query.data == "back_to_menu":
+        keyboard = get_main_menu()
+        await query.edit_message_text("Вы вернулись в главное меню. Выберите раздел:", reply_markup=keyboard)
     else:
-        # Обрабатываем другие нажатия кнопок
         context.user_data["section"] = query.data
-         # 💡 Читаем записи из файла
-        entries = read_entries(query.data)  # 👈 добавлено
+        entries = read_entries(query.data)
         message = f"Ты выбрал раздел: {query.data}.\n\nВот что у тебя есть:\n{entries}\n\nНапиши, что хочешь туда записать."
-        await query.edit_message_text(message)  # 👈 обновлено сообщение с показом записей
+
+        # 💡 Добавим кнопку "Назад в меню"
+        back_button = InlineKeyboardMarkup([
+            [InlineKeyboardButton("🔙 Назад в меню", callback_data="back_to_menu")]
+        ])
+
+        await query.edit_message_text(message, reply_markup=back_button)
+
 
 # Обработка текстовых сообщений
 async def text_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
