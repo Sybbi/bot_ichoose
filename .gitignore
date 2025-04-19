@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+
+# Виртуальные окружения
+venv/
+env/
+*.egg-info/
+
+# VS Code
+.vscode/
+
+# Служебные файлы
+.DS_Store
+
+# Docker
+*.log
+*.pid
+
+# Пользовательская директория
+data/
+
+config.py
