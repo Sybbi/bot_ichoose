@@ -10,8 +10,11 @@ def get_main_menu():
             InlineKeyboardButton("💬 Промты", callback_data="промты"),
         ],
         [
-            InlineKeyboardButton("❤️ Женщины", callback_data="женщины"),
+            InlineKeyboardButton("❤️ Самочувствие", callback_data="Самочувствие"),
             InlineKeyboardButton("📁 Другое", callback_data="другое"),
+        ],
+        [
+            InlineKeyboardButton("❤️ ссылки", callback_data="ссылки"),
         ],
     ]
     return InlineKeyboardMarkup(keyboard)
